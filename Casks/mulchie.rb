@@ -14,7 +14,6 @@ cask "mulchie" do
     strategy :github_latest
   end
 
-  conflicts_with formula: "mulchie-cli"
   depends_on macos: :monterey
 
   app "Mulchie.app"
