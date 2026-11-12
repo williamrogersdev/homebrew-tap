@@ -1,0 +1,31 @@
+# Cask template. Rendered by scripts/render-homebrew.sh at release time.
+# 0.3.0-rc.1 and f62e4e93039a86e70d95014b20ea3ec04ad5d92b7e56429bd36b771916160b7d are filled in. The result goes to Casks/mulchie.rb in the tap.
+cask "mulchie" do
+  version "0.3.0-rc.1"
+  sha256 "f62e4e93039a86e70d95014b20ea3ec04ad5d92b7e56429bd36b771916160b7d"
+
+  url "https://github.com/williamrogersdev/mulchie/releases/download/v#{version}/Mulchie_#{version}_universal.dmg"
+  name "Mulchie"
+  desc "Keeps machines running many AI agents healthy"
+  homepage "https://mulchie.com/"
+
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
+  conflicts_with formula: "mulchie-cli"
+  depends_on macos: :monterey
+
+  app "Mulchie.app"
+  # The command-line tool ships inside the app as a sidecar.
+  binary "#{appdir}/Mulchie.app/Contents/MacOS/mulchie"
+
+  zap trash: [
+    "~/Library/Application Support/dev.mulchie.desktop",
+    "~/Library/Caches/dev.mulchie.desktop",
+    "~/Library/Preferences/dev.mulchie.desktop.plist",
+    "~/Library/Saved Application State/dev.mulchie.desktop.savedState",
+  ]
+  # ~/.config/mulchie (settings, token, backups) is deliberately not listed.
+end
